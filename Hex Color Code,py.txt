@@ -1,0 +1,16 @@
+import re
+
+n = int(input())
+
+css_content = ""
+for _ in range(n):
+    css_content += input() + "\n"
+
+pattern = r'#([a-fA-F0-9]{3}|[a-fA-F0-9]{6})(?=[;,\s\)])'
+
+inside_blocks = re.findall(r'\{([^}]+)\}', css_content)
+
+for block in inside_blocks:
+    matches = re.findall(pattern, block)
+    for match in matches:
+        print(f"#{match}")
