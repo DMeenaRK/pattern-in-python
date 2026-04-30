@@ -1,23 +1,13 @@
 import re
-
-def fun(s):
-  
-    pattern = r'^[a-zA-Z0-9_-]+@[a-zA-Z0-9]+\.[a-zA-Z]{1,3}$'
-    return re.match(pattern, s) is not None
-
-def filter_mail(emails):
-    return list(filter(fun, emails))
+import email.utils
 
 
-def filter_mail(emails):
-    return list(filter(fun, emails))
+pattern = r'^[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z]+\.[a-zA-Z]{1,3}$'
 
-if __name__ == '__main__':
-    n = int(input())
-    emails = []
-    for _ in range(n):
-        emails.append(input())
+n = int(input())
 
-filtered_emails = filter_mail(emails)
-filtered_emails.sort()
-print(filtered_emails)
+for _ in range(n):
+    line = input()
+    parsed_email = email.utils.parseaddr(line)
+    if re.match(pattern, parsed_email[1]):
+        print(email.utils.formataddr(parsed_email))
